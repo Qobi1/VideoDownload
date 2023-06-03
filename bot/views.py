@@ -58,16 +58,10 @@ async def url_handler(update: Update, context: CallbackContext):
         }
 
         response = requests.get(url, headers=headers, params=querystring)
-        print(response.json())
-        video = response.json()['video'][0]
         urlretrieve(response.json()['video'][0], f'media/{user.id}.mp4')
-        # urlretrieve(response.json()['music'][0], f'media/{user.id}.mp3')
-        print(response.json()['music'][0])
         try:
-            await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp4', 'rb'), read_timeout=10000, reply_markup=btn(user, 'TikTok', video))
-            # await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp3', 'rb'))
+            await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp4', 'rb'), read_timeout=10000, reply_markup=btn(user, 'TikTok'), supports_streaming=True)
             os.remove(f'media/{user.id}.mp4')
-            # os.remove(f'media/{user.id}.mp3')
         except Exception as e:
             print(e)
             os.remove(f'media/{user.id}.mp4')
@@ -85,10 +79,10 @@ async def inline_handler(update: Update, context: CallbackContext):
         await context.bot.send_video(user.id, video=open(f'{query.data}.mp4', 'rb'))
 
 
-def btn(user, type, video):
+def btn(user, type):
     btn = []
     if type == 'TikTok':
-       btn = [[InlineKeyboardButton('Share', url=f"https://telegram.me/share/url?url={BOT_LINK}?start={user.id}&url=")]]
+       btn = [[InlineKeyboardButton('Share', url=f"https://telegram.me/share/url?url={BOT_LINK}?start={user.id}")]]
 
     return InlineKeyboardMarkup(btn)
 
