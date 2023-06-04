@@ -60,7 +60,7 @@ async def url_handler(update: Update, context: CallbackContext):
         response = requests.get(url, headers=headers, params=querystring)
         urlretrieve(response.json()['video'][0], f'media/{user.id}.mp4')
         try:
-            await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp4', 'rb'), read_timeout=10000, reply_markup=btn(user, 'TikTok'), supports_streaming=True)
+            await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp4', 'rb'), read_timeout=10000, supports_streaming=True)
             os.remove(f'media/{user.id}.mp4')
         except Exception as e:
             print(e)
