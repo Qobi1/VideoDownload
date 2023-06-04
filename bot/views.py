@@ -61,10 +61,10 @@ async def url_handler(update: Update, context: CallbackContext):
         # urlretrieve(response.json()['video'][0], f'media/{user.id}.mp4')
         try:
             await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp4', 'rb'), read_timeout=10000, supports_streaming=True)
-            os.remove(f'media/{user.id}.mp4')
+            # os.remove(f'media/{user.id}.mp4')
         except Exception as e:
             print(e)
-            os.remove(f'media/{user.id}.mp4')
+            # os.remove(f'media/{user.id}.mp4')
             await update.message.reply_text('Ooops, an error occurred, Try again')
     else:
         await update.message.reply_text('❌Something went wrong. Try again')
