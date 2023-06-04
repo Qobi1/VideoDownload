@@ -57,8 +57,8 @@ async def url_handler(update: Update, context: CallbackContext):
             "X-RapidAPI-Host": "tiktok-full-info-without-watermark.p.rapidapi.com"
         }
 
-        response = requests.get(url, headers=headers, params=querystring)
-        urlretrieve(response.json()['video'][0], f'media/{user.id}.mp4')
+        # response = requests.get(url, headers=headers, params=querystring)
+        # urlretrieve(response.json()['video'][0], f'media/{user.id}.mp4')
         try:
             await context.bot.send_video(user.id, video=open(f'media/{user.id}.mp4', 'rb'), read_timeout=10000, supports_streaming=True)
             os.remove(f'media/{user.id}.mp4')
